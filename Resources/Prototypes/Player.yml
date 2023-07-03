@@ -1,0 +1,25 @@
+- type: entity
+  id: Player
+  name: player
+  description:
+  components:
+  - type: Input
+  - type: Eye
+  - type: Sprite
+    sprite: test.rsi
+    state: icon
+    layers:
+    - state: icon
+      shader: unshaded
+    noRot: false
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+  - type: Fixtures
+    fixtures:
+      body:
+        shape:
+          !type:PhysShapeCircle
+          radius: 1
+        mass: 1
+        restitution: 0.0
