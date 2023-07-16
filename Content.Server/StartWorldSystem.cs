@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Robust.Server.GameObjects;
+﻿using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -54,16 +48,17 @@ sealed public class StartWorldSystem : EntitySystem
         GameMap = _mapManager.CreateMap();
     }
 
-
     private void PlayerStatusChanged(object blah, SessionStatusEventArgs args)
     {
         if (args.NewStatus == SessionStatus.Connected)
         {
             StartRound();
 
+            // Spawn player entity
             var playerEntity = EntityManager.SpawnEntity("Player", new EntityCoordinates(_mapManager.GetMapEntityId(GameMap), 0.5f, 0.5f));
             _metaDataSystem.SetEntityName(playerEntity, args.Session.ToString());
 
+            // Attack player to entity and join game 
             _actorSystem.Attach(playerEntity, args.Session);
             args.Session.JoinGame();
         }
